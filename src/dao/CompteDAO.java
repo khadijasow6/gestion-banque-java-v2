@@ -25,7 +25,7 @@ public class CompteDAO {
         EntityManager em = DAO.createEntityManager();
         try {
             return em.createNamedQuery("Comptes.findByNumeroCompte", Comptes.class)
-                    .setParameter("numero", numero)
+                    .setParameter("numeroCompte", numero)
                     .getSingleResult();
         } finally {
             em.close();
@@ -78,4 +78,16 @@ public class CompteDAO {
     public List<CompteDTO> AffichageCompte() {
         return CompteMapper.toDtoList(allComptes());
     }
+    public void updateCompte(Comptes compte) {
+    EntityManager em = DAO.createEntityManager();
+    EntityTransaction tx = em.getTransaction();
+
+    try {
+        tx.begin();
+        em.merge(compte);
+        tx.commit();
+    } finally {
+        em.close();
+    }
+}
 }

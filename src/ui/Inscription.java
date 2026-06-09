@@ -154,8 +154,9 @@ public class Inscription extends javax.swing.JFrame {
         String username = username_txt.getText().trim();
         String password = String.valueOf(password_txt.getPassword());
         String role = role_txt.getSelectedItem().toString();
+        
         if(nom.length() < 2){
-        JOptionPane.showMessageDialog(null, "Sa sante bi bakhoul dougalatt");
+        JOptionPane.showMessageDialog(null, "Sa sante bi bakhoul dougalatt ko ");
      return;
     }
 

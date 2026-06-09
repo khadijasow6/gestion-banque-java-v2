@@ -79,4 +79,13 @@ public class UtilisateurDAO {
 
         }
     }
+    public Utilisateurs findById(Integer id) {
+    EntityManager em = DAO.createEntityManager();
+
+    try {
+        return em.find(Utilisateurs.class, id);
+    } finally {
+        em.close();
+    }
+}
 }
