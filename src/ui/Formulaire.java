@@ -348,8 +348,7 @@ if(!email.contains("@")){
 
     private void transaction_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transaction_btnActionPerformed
         // TODO add your handling code here:
-        TransactionForm tf = new TransactionForm();
-         tf.setVisible(true);
+        
 
     }//GEN-LAST:event_transaction_btnActionPerformed
 

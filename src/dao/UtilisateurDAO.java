@@ -88,4 +88,62 @@ public class UtilisateurDAO {
         em.close();
     }
 }
+    
+ public void updateUser(Utilisateurs user) {
+
+    EntityManager em = DAO.createEntityManager();
+    EntityTransaction tx = em.getTransaction();
+
+    try {
+
+        tx.begin();
+
+        em.merge(user);
+
+        tx.commit();
+
+    } catch (Exception e) {
+
+        if (tx != null && tx.isActive()) {
+            tx.rollback();
+        }
+
+        throw e;
+
+    } finally {
+
+        em.close();
+
+    }
+}
+ public void updatePassword(Utilisateurs user) {
+
+    EntityManager em = DAO.createEntityManager();
+    EntityTransaction tx = em.getTransaction();
+
+    try {
+
+        tx.begin();
+
+        em.merge(user);
+
+        tx.commit();
+
+    } catch (Exception e) {
+
+        if (tx.isActive()) {
+            tx.rollback();
+        }
+
+        throw e;
+
+    } finally {
+
+        em.close();
+
+    }
+}
+    
+    
+    
 }

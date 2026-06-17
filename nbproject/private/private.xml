@@ -12,6 +12,11 @@
             <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/dao/UtilisateurDAO.java</file>
             <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/utils/UtilsFonction.java</file>
             <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/ui/Inscription.java</file>
+            <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/models/Transactions.java</file>
+            <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/dao/TransactionDAO.java</file>
+            <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/dao/CompteDAO.java</file>
+            <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/enums/TypeTransaction.java</file>
+            <file>file:/C:/Users/SOW/Downloads/Gestion_banque/Gestion_banque/src/ui/TransactionForm.java</file>
         </group>
     </open-files>
 </project-private>

@@ -69,6 +69,9 @@ public class Utilisateurs implements Serializable {
     @Column(name = "actif")
     private boolean actif;
     @Basic(optional = false)
+    @Column(name = "premiere_connexion")
+    private boolean premiereConnexion;
+    @Basic(optional = false)
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -105,6 +108,7 @@ public class Utilisateurs implements Serializable {
         this.password = password;
         this.role = role;
         this.actif = true;
+        this.premiereConnexion = true;
     }
 
     public Integer getId() {
@@ -170,7 +174,13 @@ public class Utilisateurs implements Serializable {
     public void setActif(boolean actif) {
         this.actif = actif;
     }
+public boolean getPremiereConnexion() {
+    return premiereConnexion;
+}
 
+public void setPremiereConnexion(boolean premiereConnexion) {
+    this.premiereConnexion = premiereConnexion;
+}
     public Date getCreatedAt() {
         return createdAt;
     }

@@ -55,6 +55,7 @@ public class Connexion extends javax.swing.JFrame {
         username_txt = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         motdepasse_txt = new javax.swing.JPasswordField();
+        inscrire_btn = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -77,24 +78,33 @@ public class Connexion extends javax.swing.JFrame {
             }
         });
 
+        inscrire_btn.setText("S inscrire");
+        inscrire_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inscrire_btnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(motdepasse_txt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(username_txt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(username_txt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inscrire_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(101, 101, 101)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,9 +117,11 @@ public class Connexion extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(motdepasse_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
-                .addComponent(jButton1)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(inscrire_btn))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
@@ -121,25 +133,69 @@ public class Connexion extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
     String userName = username_txt.getText().trim();
-String password = motdepasse_txt.getText().trim();
+    String password = motdepasse_txt.getText().trim();
 
-Utilisateurs user = userDAO.connexionUser(userName);
-if (user != null &&
-        UtilsFonction.decrypt(
-                user.getPassword())
-                .equals(password)) {
+    Utilisateurs user = userDAO.connexionUser(userName);
 
-    new Formulaire(user).setVisible(true);
+    if (user != null &&
+        UtilsFonction.decrypt(user.getPassword()).equals(password)) {
+              if (!user.getActif()) {
+               JOptionPane.showMessageDialog(this,"Votre compte a été désactivé. Veuillez contacter l'administrateur."); 
+
+    return;
+}
+          if(user.getPremiereConnexion()){
+
+    new ChangerMotDePasseForm(user).setVisible(true);
+
     this.dispose();
 
-} else {
+    return;
+}
+        if (user.getRole().equals(Role.ADMIN.getValue())) {
 
-    JOptionPane.showMessageDialog(this, "Username ou mot de passe incorrect");
+    JOptionPane.showMessageDialog(this,
+            "Je suis Administrateur");
+
+    new AdminFormulaire().setVisible(true);
 
 }
+else if (user.getRole().equals(
+        Role.GESTIONNAIRE.getValue())) {
 
+    JOptionPane.showMessageDialog(this,
+            "Je suis Gestionnaire");
+
+    new Formulaire(user).setVisible(true);
+
+}
+else if (user.getRole().equals(
+        Role.CAISSIER.getValue())) {
+
+    JOptionPane.showMessageDialog(this,
+            "Je suis Caissier");
+
+   new TransactionForm().setVisible(true);
+
+}
+        this.dispose();
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "Username ou mot de passe incorrect");
+
+    }
+
+ 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void inscrire_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscrire_btnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_inscrire_btnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,6 +223,7 @@ if (user != null &&
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton inscrire_btn;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

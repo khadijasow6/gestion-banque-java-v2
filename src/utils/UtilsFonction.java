@@ -154,6 +154,11 @@ public class UtilsFonction {
         }
         return result.toString();
     }
+    public static String genererMotDePasse() {
+
+    return "ISI" + ((int)(Math.random() * 9000) + 1000) + "@";
+
+}
 
 }
 

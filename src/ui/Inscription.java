@@ -26,7 +26,16 @@ public class Inscription extends javax.swing.JFrame {
     role_txt.addItem("gestionnaire");
     role_txt.addItem("caissier");
 }
-  
+  public Inscription(String role) {
+    initComponents();
+    userDAO = new UtilisateurDAO();
+
+    role_txt.removeAllItems();
+    role_txt.addItem(role);
+
+    role_txt.setSelectedItem(role);
+    role_txt.setEnabled(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,7 +161,7 @@ public class Inscription extends javax.swing.JFrame {
         String prenom = prenom_txt.getText().trim();
         String email = email_txt.getText().trim();
         String username = username_txt.getText().trim();
-        String password = String.valueOf(password_txt.getPassword());
+       String password = UtilsFonction.genererMotDePasse();
         String role = role_txt.getSelectedItem().toString();
         
         if(nom.length() < 2){
@@ -168,10 +177,7 @@ public class Inscription extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(null, "Email bi bakhoul");
     return;
 }
-   if(password.equals("")){
-    JOptionPane.showMessageDialog(null, "Saisir le mot de passe");
-    return;
-}
+  
       String passwordCrypte = UtilsFonction.encrypt(password);
 
     Utilisateurs user = new Utilisateurs(
@@ -182,10 +188,19 @@ public class Inscription extends javax.swing.JFrame {
             passwordCrypte,
             role
     );
+    if(userDAO.connexionUser(username) != null){
+    JOptionPane.showMessageDialog(
+            null,
+            "Username bi utilisé nagne ko ba paré");
+    return;
+}
 
-    userDAO.createUser(user);
+   userDAO.createUser(user);
 
-    JOptionPane.showMessageDialog(  null,"Inscription  bi dialleu na ");
+JOptionPane.showMessageDialog(null,"Utilisateur créé avec succès\n\n"
+        + "Username : " + username
+        + "\nMot de passe : " + password
+);
 
     }//GEN-LAST:event_inscrire_txtActionPerformed
 

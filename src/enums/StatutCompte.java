@@ -10,6 +10,7 @@ package enums;
  */
 public enum StatutCompte {
     ACTIF("actif"),
+    INACTIF("inactif"),
     SUSPENDU("suspendu"),
     CLOTURE("cloture");
     private String value;

@@ -9,8 +9,9 @@ package enums;
  * @author HP
  */
 public enum Role {
+    ADMIN("admin"),
     GESTIONNAIRE("gestionnaire"),
-    CAISSIER("caissier");
+    CAISSIER("caissier");;
     private String value;
     Role(String value){
         this.value = value;

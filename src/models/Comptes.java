@@ -96,7 +96,7 @@ public class Comptes implements Serializable {
         this.numeroCompte = numeroCompte;
         this.typeCompte = typeCompte;
         this.solde = solde;
-        this.statut = StatutCompte.ACTIF.getValue();
+        this.statut = StatutCompte.INACTIF.getValue();
         this.createdAt = new Date();
         this.clientId = client;
         this.ouvertPar = user;
